@@ -22,10 +22,9 @@ markers = [
 test = "pytest"
 smoke = "pytest -m smoke"
 regression = "pytest -m regression"
-headed = "pytest --headed"
-parallel = "pytest -n auto"          # needs pytest-xdist
+headed = "pytest --headed -n 0"
 report = "allure serve allure-results"
 
 [tool.poe.tasks.debug]
-cmd = "pytest -s"
+cmd = "pytest -s -n 0"
 env = { PWDEBUG = "1" }
