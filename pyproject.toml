@@ -1,0 +1,31 @@
+[tool.pytest.ini_options]
+testpaths = ["src/tests"]
+pythonpath = ["src"]
+addopts = [
+    "--base-url=https://dojo.upexgalaxy.com",
+    "--browser=chromium",
+    "--tracing=retain-on-failure",
+    "--video=retain-on-failure",
+    "--screenshot=only-on-failure",
+    "--html=reports/report.html",
+    "--self-contained-html",
+    "-n=3",
+    "--alluredir=allure-results",
+    "--clean-alluredir",
+]
+markers = [
+    "smoke: quick sanity tests",
+    "regression: full regression suite",
+]
+
+[tool.poe.tasks]
+test = "pytest"
+smoke = "pytest -m smoke"
+regression = "pytest -m regression"
+headed = "pytest --headed"
+parallel = "pytest -n auto"          # needs pytest-xdist
+report = "allure serve allure-results"
+
+[tool.poe.tasks.debug]
+cmd = "pytest -s"
+env = { PWDEBUG = "1" }
